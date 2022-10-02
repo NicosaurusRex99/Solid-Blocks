@@ -1,3 +1,6 @@
 {
-  "parent": "solidblocks:block/blue"
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "solidblocks:blocks/blue"
+  }
 }
