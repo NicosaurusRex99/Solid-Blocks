@@ -8,10 +8,11 @@ assignees: NicosaurusRex99
 ---
 
 **Versions**
-Do NOT use latest
-Minecraft Version:
-Forge Version:
-Mod Version:
+
+Do NOT just say latest
+- Minecraft Version:
+- Forge Version:
+- Mod Version:
 
 **Describe the bug**
 A clear and concise description of what the bug is.
