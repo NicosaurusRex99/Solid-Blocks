@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "solidblocks:blocks/yellow"
+    "all": "solidblocks:block/yellow"
   }
 }

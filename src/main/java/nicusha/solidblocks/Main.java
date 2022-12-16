@@ -1,11 +1,14 @@
 package nicusha.solidblocks;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.*;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -44,12 +47,13 @@ public class Main
 
     private static <T extends Block> RegistryObject<T> registerBlock(String registryName, Supplier<T> block) {
         RegistryObject<T> registeredBlock = BLOCKS.register(registryName, block);
-        ITEMS.register(registryName, () -> new BlockItem(registeredBlock.get(), new Item.Properties().tab(scb)));
+        ITEMS.register(registryName, () -> new BlockItem(registeredBlock.get(), new Item.Properties()));
         return registeredBlock;
     }
     public Main()
     {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(Main::registerTab);
         bus.addListener(this::commonSetup);
         BLOCKS.register(bus);
         ITEMS.register(bus);
@@ -60,11 +64,20 @@ public class Main
     {
     }
 
-    public static CreativeModeTab scb = new CreativeModeTab(MODID) {
-        @Override
-        public ItemStack makeIcon() {
-            return new ItemStack(red.get());
-        }
-    };
+    public static final ResourceLocation TAB = new ResourceLocation(Main.MODID, "solidblocks");
+
+    private static ItemStack makeIcon() {
+        return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Main.MODID, "red")));
+    }
+
+
+    public static void registerTab(CreativeModeTabEvent.Register event){
+        event.registerCreativeModeTab(TAB, builder -> builder.title(Component.translatable("itemGroup.solidblocks")).icon(Main::makeIcon).displayItems((flags, output, isOp) -> {
+            for(RegistryObject<Item> item : Main.ITEMS.getEntries()){
+                output.accept(item.get());
+            }
+        }));
+
+    }
 
 }
