@@ -72,7 +72,7 @@ public class Main
 
 
     public static void registerTab(CreativeModeTabEvent.Register event){
-        event.registerCreativeModeTab(TAB, builder -> builder.title(Component.translatable("itemGroup.solidblocks")).icon(Main::makeIcon).displayItems((flags, output, isOp) -> {
+        event.registerCreativeModeTab(TAB, builder -> builder.title(Component.translatable("itemGroup.solidblocks")).icon(Main::makeIcon).displayItems((flags, output) -> {
             for(RegistryObject<Item> item : Main.ITEMS.getEntries()){
                 output.accept(item.get());
             }
